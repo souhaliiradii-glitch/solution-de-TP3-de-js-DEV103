@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        
+    </style>
+</head>
+<body>
+    <script src="TP2.js"></script>
+    <button onclick="document.write(Surface())">calculer de surface
+    </button>
+    <!--ex6 -->
+    <script>
+        
+        for(let i = 20 ; i >= 0 ; i-=2){
+            document.write(i);
+            document.write("<br>")
+        }
+        s = parseInt(prompt("donne un nombre"));
+        k = parseInt(prompt("donne un nombre"));
+        l= parseInt(prompt("donne un nombre"));
+        document.write("<br>");
+        if (s===k && k===l){
+            document.write("Les trois variables sont identiques");
+        }else if(s===k && k!==l || k===l && s!==l ||s===l && k!==s ){
+            document.write("Deux des variables sont de valeurs égales.");
+        }else{
+            document.write("Les trois variables sont différentes.");
+        }
+    </script>
+    <!-- ex13 -->
+     <script>
+        let i = prompt("donnee une chaine de caractaire");
+        let j = prompt("donne un autre chaine de caractaire");
+        if (i === j){
+         document.write("oui");
+        }else{
+         document.write("non");
+        }
+
+     </script>
+
+</body>
+</html>
