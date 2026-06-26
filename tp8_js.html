@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TP8 jQuery - All Exercises</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body>
+
+    <!--  EX 1 -->
+    <div class="exercise-box" id="ex1">
+        <nav>
+            <ul>
+                <li class="e">HTML5</li>
+                <li>Css3</li>
+                <li class="e">Javascript</li>
+            </ul>
+        </nav>
+        <section>
+            <form id="ex1Form">
+                <label for="nn">Nom: </label>
+                <input type="text" id="nn" placeholder="Nom" />
+                <label for="pr" id="t">Prenom: </label>
+                <input type="text" id="pr" placeholder="Prénom" />
+                <input type="button" value="Tester" id="testBtn" />
+            </form>
+            <div id="ex1Result" style="margin-top: 16px; background: #eaf3e6; padding: 8px 20px; border-radius: 40px; display: inline-block;"></div>
+        </section>
+    </div>
+
+    <!--  EX 2 -->
+    <div class="exercise-box" id="ex2">
+        <div class="div-container">
+            <div>1</div><div>2</div><div>3</div><div>4</div><div>5</div><div>6</div>
+            <div id="start">7</div>
+        </div>
+        <div id="ex2Message" class="msg-prev">Cliquez sur un div</div>
+    </div>
+
+    <!-- EX 3  -->
+    <div class="exercise-box" id="ex3">
+        <h1 style="font-size: 1.8rem;">Changer la couleur du texte</h1>
+        <p id="text" style="font-size: 1.4rem; font-weight: 500;">Ceci est un texte dont la couleur va changer.</p>
+        <div>
+            <button id="redButton" style="background:#f8d7da; border-color:#e06b7a;">Rouge</button>
+            <button id="greenButton" style="background:#d4edda; border-color:#5ba76f;">Vert</button>
+            <button id="blueButton" style="background:#cce5ff; border-color:#4a7db5;">Bleu</button>
+        </div>
+    </div>
+
+    <!--  EX 4 -->
+    <div class="exercise-box" id="ex4">
+        <h1 style="font-size: 1.8rem;">Animation de Taille et Couleur</h1>
+        <div id="square"></div>
+        <div>
+            <button id="growButton">Agrandir</button>
+            <button id="shrinkButton">Réduire</button>
+            <button id="colorButton">Changer Couleur</button>
+        </div>
+        <div style="margin-top: 12px; font-size: 0.9rem; color: #4b5c6b;">(couleur alterne vert, rouge, jaune)</div>
+    </div>
+
+    <!--  EX 5  -->
+    <div class="exercise-box" id="ex5">
+        <div class="hover-box" id="hoverTarget">Survolez-moi pour changer de couleur !</div>
+    </div>
+
+    <!--  EX 6 -->
+    <div class="exercise-box" id="ex6">
+        <div class="ex-input-group">
+            <input type="text" id="nouvelElement" placeholder="Nouvel élément" />
+            <button id="ajouter">Ajouter</button>
+        </div>
+        <ul id="maListe"></ul>
+        <div style="font-size:0.9rem; color:#4f5b66;">Cliquez sur « ✕ » pour supprimer un élément</div>
+    </div>
+
+    <script>
+        $(document).ready(function() {
+
+            // EX 1
+            
+            $('.e').hide();
+
+            
+            var inputCount = $('input').length;
+            $('#ex1Result').text('Nombre d\'inputs : ' + inputCount);
+
+            
+            $('#testBtn').on('click', function() {
+                var nom = $('#nn').val() || '(vide)';
+                var prenom = $('#pr').val() || '(vide)';
+                alert('Nom : ' + nom + '\nPrénom : ' + prenom);
+            });
+
+            // EX 2 
+            $('#ex2 .div-container div').on('click', function() {
+                $('#ex2 .div-container div').removeClass('highlight-green');
+
+                var prevDiv = $(this).prev('div');
+                if (prevDiv.length > 0) {
+                    
+                    prevDiv.addClass('highlight-green');
+                    $('#ex2Message').text(' Div précédent (n°' + prevDiv.text() + ') en vert');
+                } else {
+                    
+                    $(this).addClass('highlight-green');
+                    $('#ex2Message').text('Je suis la première div (n°' + $(this).text() + ')');
+                }
+            });
+
+            //  EX 3
+            
+            $('#redButton').on('click', function() {
+                $('#text').css('color', 'red');
+            });
+            $('#greenButton').on('click', function() {
+                $('#text').css('color', 'green');
+            });
+            $('#blueButton').on('click', function() {
+                $('#text').css('color', 'blue');
+            });
+
+            //  EX 4 
+            var colorCycle = ['#2ecc71', '#e74c3c', '#f1c40f'];
+            var colorIndex = 0;
+
+            $('#growButton').on('click', function() {
+                var currentWidth = $('#square').width();
+                var newSize = Math.min(currentWidth + 20, 300);
+                $('#square').width(newSize).height(newSize);
+            });
+
+            $('#shrinkButton').on('click', function() {
+                var currentWidth = $('#square').width();
+                var newSize = Math.max(currentWidth - 20, 40);
+                $('#square').width(newSize).height(newSize);
+            });
+
+            $('#colorButton').on('click', function() {
+                var color = colorCycle[colorIndex % colorCycle.length];
+                $('#square').css('background-color', color);
+                colorIndex++;
+            });
+
+            // EX 5
+            $('#hoverTarget').on('mouseenter', function() {
+                $(this).addClass('red-hover');
+            });
+            $('#hoverTarget').on('mouseleave', function() {
+                $(this).removeClass('red-hover');
+            });
+
+            //  EX 6 
+            function ajouterElement(texte) {
+                if (!texte.trim()) return;
+                var li = $('<li></li>').text(texte);
+                var delBtn = $('<button class="delete-btn">✕</button>');
+                delBtn.on('click', function() {
+                    $(this).parent('li').remove();
+                });
+                li.append(delBtn);
+                $('#maListe').append(li);
+            }
+
+            $('#ajouter').on('click', function() {
+                var valeur = $('#nouvelElement').val();
+                ajouterElement(valeur);
+                $('#nouvelElement').val('').focus();
+            });
+
+            $('#nouvelElement').on('keypress', function(e) {
+                if (e.which === 13) {
+                    $('#ajouter').click();
+                }
+            });
+
+            // EX 2 : initialisation : aucun fond vert, message neutre
+            $('#ex2Message').text('Cliquez sur un div');
+
+            // EX4 : initialisation couleur bleue 
+            $('#square').css('background-color', '#3498db');
+
+
+        }); 
+    </script>
+
+</body>
+</html>
